@@ -15,34 +15,42 @@ int main()
     Graph g;
     std::ifstream in;
     std::string line;
-    int n, r;
     in.open(filename, std::ios::in);
+    /*Валидация данных*/
     try
     {
         validation::file(filename);
     }
-    catch(const char* e)
+    catch (const char *e)
     {
         std::cerr << e << '\n';
         exit(1);
     }
-    // Считываем количество вершин
+    /*Считывание данных и формирование графа*/
     std::getline(in, line);
-    n = std::stoi(line);
+    int n = std::stoi(line);
     // Считываем количество ребер
     std::getline(in, line);
-    r = std::stoi(line);
+    int r = std::stoi(line);
     for (int i = 0; i < r; i++)
     {
         std::getline(in, line);
         std::vector<std::string> nodes = utils::split_string(line, ' ');
         g.add(std::stoi(nodes[0]), std::stoi(nodes[1]));
     }
+    // Считываем от какого ребра считать расстояние
+    std::getline(in, line);
+    int startVertex = std::stoi(line);
+
+    /*Основной рассчет*/
+    std::unordered_map<int, int> res = utils::bfsDistances(g, startVertex);
+
+    /*Вывод результата*/
     g.printGraph();
-    std::unordered_map<int, int> res = utils::bfsDistances(g, 4);
     for (const auto &[vertex, dist] : res)
     {
         std::cout << "Расстояние до " << vertex << " равно " << dist;
         std::cout << std::endl;
     }
+    in.close();
 }
