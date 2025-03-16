@@ -24,6 +24,7 @@ int main()
     catch(const char* e)
     {
         std::cerr << e << '\n';
+        exit(1);
     }
     // Считываем количество вершин
     std::getline(in, line);
@@ -38,7 +39,7 @@ int main()
         g.add(std::stoi(nodes[0]), std::stoi(nodes[1]));
     }
     g.printGraph();
-    std::unordered_map<int, int> res = utils::bfsDistances(g, 0);
+    std::unordered_map<int, int> res = utils::bfsDistances(g, 4);
     for (const auto &[vertex, dist] : res)
     {
         std::cout << "Расстояние до " << vertex << " равно " << dist;

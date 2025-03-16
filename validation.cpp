@@ -20,61 +20,50 @@ namespace validation
         // в первой строке должно быть одно число
         std::getline(file, line);
         one_number(line);
-        // std::vector<std::string> nums = utils::split_string(line, ' ');
-        // if (nums.size() > 1)
-        // {
-        //     throw "error: first row must include only one number";
-        // }
-        // if (nums[0].find_first_not_of("0123456789") != nums[0].npos)
-        // {
-        //     throw "error: first row must include only number";
-        // }
+        int n = std::stoi(line);
         // во второй строке должно быть одно число
         std::getline(file, line);
-        nums = utils::split_string(line, ' ');
-        if (nums.size() > 1)
-        {
-            throw "error: second row must include only one number";
-        }
-        if (nums[0].find_first_not_of("0123456789") != nums[0].npos)
-        {
-            throw "error: second row must include only number";
-        }
+        one_number(line);
         // Валидайция ввода ребер графа
-        // число ребер
-        int r = std::stoi(nums[0]);
+        int r = std::stoi(line);
         for (int i = 0; i < r; i++)
         {
             std::getline(file, line);
-            std::vector<std::string> nodes = utils::split_string(line, ' ');
-            if (nodes.size() != 2)
-            {
-                throw "error: edge must contain two nodes";
-            }
+            edge(n, line);
         }
         // в последней строке должно быть одно число
         std::getline(file, line);
-        nums = utils::split_string(line, ' ');
-        if (nums.size() > 1)
-        {
-            throw "error: last row must include only one number";
-        }
-        if (nums[0].find_first_not_of("0123456789") != nums[0].npos)
-        {
-            throw "error: last row must include only number";
-        }
+        one_number(line);
         if (!file.eof())
         {
             throw "error: invalid number of rows";
         }
     };
-    void one_number(const std::string& str) {
+
+    void one_number(const std::string &str)
+    {
         for (size_t i = 0; i < str.size(); i++)
         {
             if (!std::isdigit(str[i]))
             {
                 throw "error: row must include only one number";
-            }  
+            }
+        }
+    };
+
+    void edge(const int n, const std::string &str) {
+        std::vector<std::string> nodes = utils::split_string(str, ' ');
+        if (nodes.size() != 2)
+        {
+            throw "error: edge must contain two nodes";
+        }
+        for (size_t i = 0; i < nodes.size(); i++)
+        {
+            one_number(nodes[i]);
+            int nodeIdx = std::stoi(nodes[i]);
+            if (nodeIdx >= n) {
+                throw "invalid node index";
+            }
         }
     };
 } // namespace validation
