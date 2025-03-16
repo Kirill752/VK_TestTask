@@ -9,6 +9,8 @@
                 "-g",
                 "-std=c++23",
                 "${file}",
+                "Graph.o",
+                "validation.o",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

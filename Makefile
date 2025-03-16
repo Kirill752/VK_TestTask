@@ -1,8 +1,8 @@
 CC=g++
 STD=-std=c++23
 
-run:
-	$(CC) $(STD) main.cpp; ./a.out; rm a.out
+all:
+	$(CC) $(STD) main.cpp Graph.o validation.o utils.o; ./a.out; rm a.out
 
 build:
-	$(CC) $(STD) main.cpp -o $(OUT)
+	$(CC) $(STD) main.cpp Graph.o validation.o utils.o -o $(OUT)
