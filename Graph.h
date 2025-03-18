@@ -13,8 +13,10 @@ private:
     std::unordered_map<int, std::vector<int>> adjList;
 
 public:
-    Graph() {}
+    Graph() : numVertices(0) {}
     Graph(int numVertices_);
+    Graph(int numVertices_, std::unordered_map<int, std::vector<int>> adjList_) : numVertices(numVertices_),
+                                                                                  adjList(adjList_) {}
     ~Graph() {};
     // Добавление ребра между вершинами v и u
     void add(int v, int u);
