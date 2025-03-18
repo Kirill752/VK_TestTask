@@ -62,7 +62,7 @@ namespace validation
             one_number(nodes[i]);
             int nodeIdx = std::stoi(nodes[i]);
             if (nodeIdx >= n) {
-                throw "invalid node index";
+                throw "error: invalid node index";
             }
         }
     };

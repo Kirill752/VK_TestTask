@@ -9,11 +9,11 @@
 class Graph
 {
 private:
-    int numVertices;
+    int numVertices = 0;
     std::unordered_map<int, std::vector<int>> adjList;
 
 public:
-    Graph() : numVertices(0) {}
+    Graph() {}
     Graph(int numVertices_);
     Graph(int numVertices_, std::unordered_map<int, std::vector<int>> adjList_) : numVertices(numVertices_),
                                                                                   adjList(adjList_) {}
