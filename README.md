@@ -1,114 +1,82 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
-
-<h3 align="center">Project Title</h3>
+<h1 align="center">Тестоввое задание С++. Cтажировка VK Maps.</h1>
 
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
 
 ---
 
-<p align="center"> Few lines describing your project.
-    <br> 
-</p>
+<h3 align="center"> 
+В данном репозитори представленно решение тестового задания на стажировку в VK Maps на С++.
+</h3>
 
-## Table of Contents
+## Оглавление
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Условие задания](#task_condition)
+- [О программе](#about)
+- [Запуск](#getting_started)
+- [Использованные библиотеки](#built_using)
+- [Автор](#authors)
 
-## About <a name = "about"></a>
+## Условие задания <a name = "task_condition"></a>
+Задача сосотоит в следующем. Необходимо написать программу на С++, которая будет считать кратчайшее расстояние от переданной вершины до всех остальных вершин в ненаправленном графе. Расстояние до каждой вершины от переданной необходимо вывести на экран.
 
-Write about 1-2 paragraphs describing the purpose of your project.
-
-## 🏁 Getting Started <a name = "getting_started"></a>
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them.
-
+Структура графа считывается из файла graph.txt и имеет следующий вид:
 ```
-Give examples
+5   # количество вершин графа
+4   # количество ребер графа
+0 1 # далее идут ребра графа ("0 1" означает, что есть путь от вершины 0 до 1)
+0 4 
+1 2 
+1 3 
+4   # номер вершины от которой необходимо посчитать расстояние до всех остальных
 ```
+Длина каждого ребра равна 1, нумерация вершин начинается с 0, а также допускается, что существует путь до каждой вершины от каждой.
+Соответсвенно вышеприведенный ввод даст нам следующий граф:
 
-### Installing
+![Graph Example](./Graph_Example.png)
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
+Вывод программы будет следующий:
 ```
-Give the example
+1 # расстояние от вершины 4 до вершины 0
+2 # расстояние от вершины 4 до вершины 1
+3 # расстояние от вершины 4 до вершины 2
+3 # расстояние от вершины 4 до вершины 3
+0 # расстояние от вершины 4 до вершины 4
 ```
+## О программе <a name = "about"></a>
 
-And repeat
+Программа предоставляет возможность пользователю по входным данным найти кратчайшее расстояние от заданной вершины до всех остальных. Для нахождения такого расстояния используется алгоритм поиска в ширину. Его выбор обусловлен тем, что все ребра имеют одинаковый вес, равный единице. Если бы это было не так, то пришлось бы применять более сложные алгоритмы, такие как алгоритм Дейкстры (граф без циклов и ребер с отрицательным весом) или фалгоритм Беллмана-Форда (вес ребер может быть отрицательным).
 
+В программе учтенна валидация данных, таким образом если формат данных в файле будет некорректным, программа сообщит об этом пользователю.
+
+Также написанны тесты, учитывающие ключевые случаи входных данных, такие как: пустой файл, одна вершина, граф с циклами и так далее. Для их написанния была использована стороняя библиотека [Catch2](https://github.com/catchorg/Catch2/tree/v2.x).
+
+
+## Запуск <a name = "getting_started"></a>
+Чтобы скомпилировать программу необходимо выполнить команду
 ```
-until finished
+make
 ```
+После этого в корне проекта появится файл **main**. После его запуска программа выведет результат в **stdout**.
 
-End with an example of getting some data out of the system or using it for a little demo.
-
-## Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Для запуска тестов необходимо выполнить команду
 ```
-Give an example
+make check
 ```
+Она запустит заранее прописанные тесты и выведет результат их выполнения.
 
-### And coding style tests
-
-Explain what these tests test and why
-
+Для удаления всех ранее созданных объектных файлов необходимо выполнить команду
 ```
-Give an example
+make clean
 ```
 
-## Usage <a name="usage"></a>
+## Использованные библиотеки <a name = "built_using"></a>
 
-Add notes about how to use the system.
+- [Catch2](https://github.com/catchorg/Catch2/tree/v2.x) - Тестирование
 
-## Deployment <a name = "deployment"></a>
+## Автор <a name = "authors"></a>
 
-Add additional notes about how to deploy this on a live system.
-
-## Built Using <a name = "built_using"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
-
-## ✍️ Authors <a name = "authors"></a>
-
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- [@Kirill752](https://github.com/Kirill752)
