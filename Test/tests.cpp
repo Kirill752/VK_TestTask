@@ -2,9 +2,9 @@
 #include <fstream>
 #include <string>
 #include "extern/catch.hpp"
-#include "utils.h"
-#include "Graph.h"
-#include "validation.h"
+#include "Utils/utils.h"
+#include "Graph/Graph.h"
+#include "Validation/validation.h"
 
 TEST_CASE("Can be constructed", "[Graph]")
 {
@@ -40,11 +40,10 @@ TEST_CASE("Can be constructed", "[Graph]")
 
 TEST_CASE("Distance test", "[distance]")
 {
-    std::unordered_map<int, int> res;
+    std::vector<int> res;
     // Граф из одной вершины
     Graph g1(1, {{{0}, {}}});
-    res = {
-        {0, 0}};
+    res = {0};
     REQUIRE(utils::bfsDistances(g1, 0) == res);
     // Граф с одной компонентой связанности
     Graph g2(5, {{0, {1, 4}},
@@ -52,31 +51,19 @@ TEST_CASE("Distance test", "[distance]")
                  {2, {1}},
                  {3, {1}},
                  {4, {0}}});
-    res = {
-        {0, 1},
-        {1, 2},
-        {2, 3},
-        {3, 3},
-        {4, 0},
-    };
+    res = {1, 2, 3, 3, 0};
     REQUIRE(utils::bfsDistances(g2, 4) == res);
     // Граф с циклами
     Graph g3(2, {{0, {1}},
                  {1, {0}}});
-    res = {
-        {0, 0},
-        {1, 1}};
+    res = {0, 1};
     REQUIRE(utils::bfsDistances(g3, 0) == res);
     // Граф с петлями
     Graph g4(4, {{0, {1, 3}},
                  {1, {0, 2}},
                  {2, {1, 3}},
                  {3, {0, 2}}});
-    res = {
-        {0, 2},
-        {1, 1},
-        {2, 0},
-        {3, 1}};
+    res = {2, 1, 0, 1};
     REQUIRE(utils::bfsDistances(g4, 2) == res);
     // Петля в виде восьмерки
     Graph g5(7, {{0, {1, 3}},
@@ -86,39 +73,15 @@ TEST_CASE("Distance test", "[distance]")
                  {4, {5, 2}},
                  {5, {4, 6}},
                  {6, {5, 2}}});
-    res = {
-        {0, 2},
-        {1, 1},
-        {2, 0},
-        {3, 1},
-        {5, 2},
-        {4, 1},
-        {6, 1}};
+    res = { 2, 1, 0, 1, 1, 2, 1};
     REQUIRE(utils::bfsDistances(g5, 2) == res);
     // Граф в виде звезды
     Graph g6(7, {{0, {1, 2, 3, 4, 5, 6}}});
-    res = {
-        {0, 0},
-        {1, 1},
-        {2, 1},
-        {3, 1},
-        {5, 1},
-        {4, 1},
-        {6, 1}};
+    res = { 0, 1, 1, 1, 1, 1, 1};
     REQUIRE(utils::bfsDistances(g6, 0) == res);
     // Гарф в виде цепочки
     Graph g7(11, {{0, {1}}, {1, {2}}, {2, {3}}, {3, {4}}, {4, {5}}, {5, {6}}, {6, {7}}, {7, {8}}, {8, {9}}, {9, {10}}});
-    res = {{0, 0},
-           {1, 1},
-           {2, 2},
-           {3, 3},
-           {4, 4},
-           {5, 5},
-           {6, 6},
-           {7, 7},
-           {8, 8},
-           {9, 9},
-           {10, 10}};
+    res = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     REQUIRE(utils::bfsDistances(g7, 0) == res);
 }
 
@@ -126,7 +89,7 @@ TEST_CASE("Validation test", "[validation]")
 {
     std::ifstream in;
     // Несуществующий файл
-    REQUIRE_THROWS_WITH(validation::file("no_file.txt"), "error open file");
+    REQUIRE_THROWS_WITH(validation::file("no_file.txt"), "error: failed to open file");
 
     // Валидация файла из примера
     in.open("./tests/test1.txt");

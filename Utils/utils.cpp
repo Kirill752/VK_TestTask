@@ -5,15 +5,15 @@
 #include <queue>
 #include <unordered_map>
 
-#include "Graph.h"
+#include "Graph/Graph.h"
 #include "utils.h"
 
 namespace utils
 {
     // Функция для выполнения BFS и поиска расстояний от startVertex до всех остальных вершин
-    std::unordered_map<int, int> bfsDistances(const Graph &graph, int startVertex)
+    std::vector<int> bfsDistances(const Graph &graph, int startVertex)
     {
-        std::unordered_map<int, int> distances;
+        std::vector<int> distances(graph.getNumVrtices());
         std::unordered_map<int, bool> seen;
         std::queue<int> q;
         std::unordered_map<int, std::vector<int>> adjList = graph.getAdjList();

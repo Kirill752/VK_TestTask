@@ -6,36 +6,34 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Graph.h"
-#include "validation.h"
-#include "utils.h"
+#include "Graph/Graph.h"
+#include "Validation/validation.h"
+#include "Utils/utils.h"
 
 int main()
 {
-    const char *filename = "./graph.txt";
-    std::ifstream in;
-    std::string line;
-
+    const std::string filename = "./graph.txt";
+    std::ifstream in; 
     in.open(filename, std::ios::in);
+
     /*Валидация данных*/
-    try
-    {
+    try {
         validation::file(filename);
     }
-    catch (const char *e)
-    {
-        std::cerr << e << '\n';
-        exit(1);
+    catch (std::exception &e) {
+        std::cerr << e.what() << '\n';
+        return 1;
     }
+
     /*Считывание данных и формирование графа*/
+    std::string line;
     std::getline(in, line);
     int n = std::stoi(line);
     auto g = std::make_unique<Graph>(n);
     // Считываем количество ребер
     std::getline(in, line);
     int r = std::stoi(line);
-    for (int i = 0; i < r; i++)
-    {
+    for (int i = 0; i < r; i++) {
         std::getline(in, line);
         std::vector<std::string> nodes = utils::split_string(line, ' ');
         g->add(std::stoi(nodes[0]), std::stoi(nodes[1]));
@@ -43,16 +41,15 @@ int main()
     // Считываем от какого ребра считать расстояние
     std::getline(in, line);
     int startVertex = std::stoi(line);
+    in.close();
 
     /*Основной рассчет*/
-    std::unordered_map<int, int> res = utils::bfsDistances(*g, startVertex);
+    std::vector<int> res = utils::bfsDistances(*g, startVertex);
 
     /*Вывод результата*/
-    g->printGraph();
-    for (const auto &[vertex, dist] : res)
+    // g->printGraph();s
+    for (size_t i = 0; i < res.size(); i++)    
     {
-        std::cout << "Расстояние до " << vertex << " равно " << dist;
-        std::cout << std::endl;
+        std::cout << res[i] << std::endl;
     }
-    in.close();
 }

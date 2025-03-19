@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++23 -I.
 
 # Исходные файлы
-SRCS = main.cpp Graph.cpp utils.cpp validation.cpp
+SRCS = main.cpp Graph/Graph.cpp Utils/utils.cpp Validation/validation.cpp
 
 # Объектные файлы
 OBJS = $(SRCS:.cpp=.o)
@@ -14,9 +14,9 @@ OBJS = $(SRCS:.cpp=.o)
 TARGET = main
 
 # Тестовый файл
-TESTS = tests.cpp
+TESTS = Test/tests.cpp
 # Исходные файлы
-SRCST = Graph.cpp utils.cpp validation.cpp
+SRCST = Graph/Graph.cpp Utils/utils.cpp Validation/validation.cpp
 # Объектные файлы тестов
 OBJST = $(SRCST:.cpp=.o)
 # Исполняемый файл
@@ -35,7 +35,7 @@ $(TARGET): $(OBJS)
 
 # Очистка
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(OBJST) $(TARGET) $(TEST)
 
 # Запуск тестов
 $(TEST):
