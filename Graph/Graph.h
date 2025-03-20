@@ -20,8 +20,6 @@ public:
     ~Graph() {};
     // Добавление ребра между вершинами v и u
     void add(int v, int u);
-    // Удаление ребра между v и u
-    void remove(int v, int u);
     void printGraph();
     int getNumVrtices() const { return numVertices; }
     std::unordered_map<int, std::vector<int>> getAdjList() const { return adjList; }
