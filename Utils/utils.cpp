@@ -10,7 +10,6 @@
 
 namespace utils
 {
-    // Функция для выполнения BFS и поиска расстояний от startVertex до всех остальных вершин
     std::vector<int> bfsDistances(const Graph &graph, int startVertex)
     {
         std::vector<int> distances(graph.getNumVrtices());
@@ -18,7 +17,6 @@ namespace utils
         std::queue<int> q;
         std::unordered_map<int, std::vector<int>> adjList = graph.getAdjList();
 
-        // Начинаем с начальной вершины
         distances[startVertex] = 0;
         q.push(startVertex);
 
@@ -28,14 +26,13 @@ namespace utils
             q.pop();
             seen[currentVertex] = true;
             std::vector<int> neighbors = adjList[currentVertex];
-            // Обходим всех соседей текущей вершины
             for (int neighbor : neighbors)
             {
                 if (!seen[neighbor])
-                {                                                       // Если сосед ещё не посещён
-                    distances[neighbor] = distances[currentVertex] + 1; // Увеличиваем расстояние
+                {                                                      
+                    distances[neighbor] = distances[currentVertex] + 1; 
                     seen[neighbor] = true;
-                    q.push(neighbor); // Добавляем соседа в очередь
+                    q.push(neighbor);
                 }
             }
         }
@@ -55,4 +52,4 @@ namespace utils
         }
         return tokens;
     }
-} // namespace utils
+}
